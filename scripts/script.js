@@ -22,7 +22,8 @@ function generateDiv2() {
     div2.setAttribute('id', "div2Id");
     div2.style.width = width * 100 +0.2 + 'px';
     div2.style.height = height * 100 + 'px';
-    div2.style.background = 'grey';
+    div2.style.backgroundImage = "url('images/marble.jpg')";
+    div2.style.backgroundRepeat = 'no-repeat';
 
     box2.appendChild(div2);
     const div2Id = document.querySelector('#div2Id');
@@ -149,7 +150,7 @@ function generateDiv1() {
             if(positions[i]!=null){
                 div1.style.position = 'absolute';
                 div1.style.top = `${position.top + 23}px`;
-                div1.style.left = `${position.left+ 833.3}px`;
+                div1.style.left = `${position.left+ 833.2}px`;
                 checkOverlap();
             }
         });
