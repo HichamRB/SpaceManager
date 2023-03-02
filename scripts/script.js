@@ -18,6 +18,12 @@ function generateDiv2() {
     const width = document.querySelector('#width').value;
     const height = document.querySelector('#height').value;
 
+    // remove existing div2 element
+    const existingDiv2 = document.querySelector('#div2Id');
+    if (existingDiv2) {
+        existingDiv2.parentNode.removeChild(existingDiv2);
+    }
+
     const div2 = document.createElement('div');
     div2.setAttribute('id', "div2Id");
     div2.style.width = width * 100 +0.2 + 'px';
