@@ -52,7 +52,6 @@ function generateDiv1() {
     div1.style.background = '#f00';
     div1.style.fontSize = '10px';
     div1.innerHTML = `L: ${width}m <br> H: ${height}m`;
-    div1.style.position = 'absolute';
 
     // Calculate the vertical position of the new div by adding the height of the previous div
     if (box1.lastChild){
@@ -73,6 +72,7 @@ function generateDiv1() {
         event.preventDefault();
         div1_x = event.clientX - div1.offsetLeft;
         div1_y = event.clientY - div1.offsetTop;
+        div1.style.position = 'absolute';
         document.addEventListener('mousemove', moveInterface);
     }
 
