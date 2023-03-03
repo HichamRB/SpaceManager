@@ -153,10 +153,23 @@ function generateDiv1() {
         // Move each div to its best position in div2
         positions.forEach((position, i) => {
             const div1 = div1s[i];
-            if(positions[i]!=null){
-                div1.style.position = 'absolute';
-                div1.style.top = `${position.top + 23}px`;
-                div1.style.left = `${position.left+ 833.2}px`;
+            if (position !== null) {
+                if (div1.offsetHeight !== position.height) {
+                    let h = div1.offsetHeight ;
+                    let w = div1.offsetWidth ;
+                    console.log(h,w)
+                    div1.style.height  = w+'px';
+                    div1.style.width = h+'px';
+                    console.log(div1.offsetHeight,div1.offsetWidth)
+                    div1.style.position = 'absolute';
+                    div1.style.top = `${position.top + 23}px`;
+                    div1.style.left = `${position.left + 833.2}px`;
+                } else {
+                    div1.style.position = 'absolute';
+                    div1.style.top = `${position.top + 23}px`;
+                    div1.style.left = `${position.left + 833.2}px`;
+                    div1.style.transform = 'none';
+                }
                 checkOverlap();
             }
         });
@@ -181,8 +194,14 @@ function generateDiv1() {
                 return this.right.insert(width, height);
             }
 
-            // If this node doesn't have a left child, check if it fits here
-            if (width <= this.rect.right - this.rect.left && height <= this.rect.bottom - this.rect.top) {
+            // Check if the div fits here. If not, swap the dimensions and check again.
+            let fits = width <= this.rect.right - this.rect.left && height <= this.rect.bottom - this.rect.top;
+            if (!fits) {
+                [width, height] = [height, width];
+                fits = width <= this.rect.right - this.rect.left && height <= this.rect.bottom - this.rect.top;
+            }
+
+            if (fits) {
                 // It fits! Mark this node as occupied by expanding its rectangle
                 const position = {
                     top: this.rect.top,
@@ -190,6 +209,13 @@ function generateDiv1() {
                     width,
                     height
                 };
+
+                // Flip the div if its dimensions were swapped
+                if (width !== position.width) {
+                    const div = document.querySelector(`#box1 > div:nth-child(${i + 1})`);
+                    div.style.transform = 'rotate(90deg)';
+                }
+
                 this.left = new BinaryTreeNode({
                     top: this.rect.top,
                     left: this.rect.left + width,
